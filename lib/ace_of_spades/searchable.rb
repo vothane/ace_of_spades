@@ -11,7 +11,7 @@ module Ace
         class << self
 
           def searchable(options = {})
-            
+            after_save :perform_index_tasks
           end
           
         end
@@ -21,6 +21,12 @@ module Ace
     end
 
     module InstanceMethods
+
+      private
+
+      def perform_index_tasks
+        puts "ok"
+      end
 
     end
   end
