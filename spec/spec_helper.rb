@@ -1,4 +1,5 @@
 require 'pry'
+require 'rspec/rails/mocks'
 $:.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 require 'ace_of_spades'
 
