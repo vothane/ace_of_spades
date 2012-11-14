@@ -40,7 +40,7 @@ describe 'ace_of_spades' do
                 ).as_new_record.as_null_object
     end
 
-    it "should do indexing to lucene via DRb" do
+    xit "should do indexing to lucene via DRb" do
       joker.should_receive( :save ).and_return( true )
       joker.should respond_to( :after_save )
       joker.save
