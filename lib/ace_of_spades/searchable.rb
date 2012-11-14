@@ -10,7 +10,7 @@ module Ace
 
         class << self
 
-          def searchable(options = {})
+          def searchable(options = {}, &block)
             after_save :perform_index_tasks
           end
           

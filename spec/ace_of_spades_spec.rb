@@ -23,6 +23,12 @@ describe 'ace_of_spades' do
                            .collect( &:filter )
                            .should include( :perform_index_tasks )
     end
+    
+    it "should have after_destroy callback calling remove_from_index method" do
+      Joker._destroy_callbacks.select { |cb| cb.kind.eql?( :after ) }
+                              .collect( &:filter )
+                              .should include( :remove_from_index )
+    end
 
   end
 
