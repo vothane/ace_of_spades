@@ -30,6 +30,10 @@ describe 'ace_of_spades' do
                               .should include( :remove_from_index )
     end
 
+    it "should delegate indexing to AcesHigh class" do
+      AcesHigh.should_recieve :indexer
+    end
+
   end
 
   context "when saving an instance of Joker" do
