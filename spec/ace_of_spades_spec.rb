@@ -5,7 +5,9 @@ describe 'ace_of_spades' do
   class Joker < ActiveRecord::Base
     ace_of_spades
 
-    searchable
+    searchable do 
+      integer :rank, suit
+    end  
   end
 
   context "when included" do
@@ -30,8 +32,8 @@ describe 'ace_of_spades' do
                               .should include( :remove_from_index )
     end
 
-    it "should delegate indexing to AcesHigh class" do
-      AcesHigh.should_recieve :indexer
+    it "should include Aces::High module for indexing" do
+      Joker.should respond_to( :indexer )
     end
 
   end

@@ -10,10 +10,14 @@ module Ace
 
         class << self
 
-          def searchable(options = {}, &block)
+          def searchable(options = {}, &block) 
+
+            Aces::High.indexer( self, &block )
+
             after_save :perform_index_tasks
 
             after_destroy :remove_from_index
+
           end
           
         end
