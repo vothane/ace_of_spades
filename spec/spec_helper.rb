@@ -13,3 +13,24 @@ RSpec.configure do |config|
   # Use the specified formatter
   config.formatter = :documentation # :progress, :html, :textmate
 end
+
+ActiveRecord::Base.establish_connection(
+  :adapter  => "sqlite3",
+  :host     => "localhost",
+  :database => "aces"
+)
+
+begin
+  ActiveRecord::Schema.drop_table('jokers')
+rescue
+  nil
+end
+
+ActiveRecord::Schema.define do
+  create_table :jokers do |t|
+    t.string  :name
+    t.string  :occupation
+    t.integer :rank
+    t.integer :suit
+  end
+end

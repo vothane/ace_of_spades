@@ -6,7 +6,7 @@ describe 'ace_of_spades' do
     ace_of_spades
 
     searchable do 
-      integer :rank, suit
+      integer :rank, :suit
     end  
   end
 
@@ -33,7 +33,7 @@ describe 'ace_of_spades' do
     end
 
     it "should include Aces::High module for indexing" do
-      Joker.should respond_to( :indexer )
+      Aces::High.should respond_to( :indexer )
     end
 
   end
@@ -46,7 +46,7 @@ describe 'ace_of_spades' do
                 ).as_new_record.as_null_object
     end
 
-    xit "should do indexing to lucene via DRb" do
+    it "should do indexing to lucene via DRb" do
       joker.should_receive( :save ).and_return( true )
       joker.should respond_to( :after_save )
       joker.save
