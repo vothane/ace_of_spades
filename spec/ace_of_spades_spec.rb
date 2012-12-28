@@ -11,9 +11,19 @@ describe 'ace_of_spades' do
   end
 
   context "when included" do
+
+    let(:joker) do
+      mock_model("Joker", :name       => "John Gray", 
+                          :occupation => "Neurotic Megalomaniac"
+                ).as_new_record.as_null_object
+    end
     
     it "should included ace_of_spades searchable method" do
       Joker.should respond_to( :searchable )
+    end
+    
+    it "should included ace_of_spades text instance method" do
+      joker.should respond_to( :text )
     end
 
   end
