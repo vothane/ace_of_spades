@@ -6,6 +6,7 @@ describe 'ace_of_spades' do
     ace_of_spades
 
     searchable do 
+      text :name, :occupation
       integer :rank, :suit
     end  
   end
@@ -59,6 +60,7 @@ describe 'ace_of_spades' do
     it "should do indexing to lucene via DRb" do
       joker.should_receive( :save ).and_return( true )
       joker.should respond_to( :after_save )
+      joker.should_receive( :text ).with( :name, :occupation )
       joker.save
     end
 
