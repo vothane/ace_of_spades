@@ -7,7 +7,6 @@ describe 'ace_of_spades' do
 
     searchable do 
       text :name, :occupation
-      integer :rank, :suit
     end  
   end
 
@@ -15,7 +14,7 @@ describe 'ace_of_spades' do
 
     let(:joker) do
       mock_model("Joker", :name       => "John Gray", 
-                          :occupation => "Neurotic Megalomaniac"
+                          :occupation => "Rubyist Preeminence Pretender"
                 ).as_new_record.as_null_object
     end
     
@@ -52,16 +51,17 @@ describe 'ace_of_spades' do
   context "when saving an instance of Joker" do
 
     let(:joker) do
-      mock_model("Joker", :name       => "John Gray", 
-                          :occupation => "Neurotic Megalomaniac"
-                ).as_new_record.as_null_object
+      stub_model(Joker) do |joker|
+        joker.name = "John Gray"
+        joker.occupation = "Neurotic Megalomaniac"
+      end
     end
 
     it "should do indexing to lucene via DRb" do
       joker.should_receive( :save ).and_return( true )
       joker.should respond_to( :after_save )
-      joker.should_receive( :text ).with( :name, :occupation )
       joker.save
+      #joker.should_receive( :text )
     end
 
   end

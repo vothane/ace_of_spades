@@ -10,9 +10,11 @@ module Ace
 
         class << self
 
-          def searchable(options = {}, &block) 
+          def searchable(options = {}, &blk) 
 
-            Aces::High.indexer( self, &block )
+            self.class.instance_variable_set(:@block, blk)
+
+            Aces::High.indexer( self, &blk )
 
             after_save :perform_index_tasks
 
@@ -28,10 +30,15 @@ module Ace
 
     module InstanceMethods
 
+      def text(*args)
+        puts "-----------------------------------dfdfd-----------------------"
+      end  
+
       private
 
       def perform_index_tasks
-        puts "ok"
+        puts "-----------------------------------dfdfd-----------------------"
+        self.class.block.call
       end
 
       def remove_from_index
