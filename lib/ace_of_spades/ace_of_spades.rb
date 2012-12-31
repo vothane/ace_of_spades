@@ -8,15 +8,15 @@ module Ace
 
       def ace_of_spades(config = {})
         
-        cattr_accessor :search_block
+        cattr_accessor :searchable_block
 
         class << self
 
-          def searchable(options = {}, &blk) 
+          def searchable(options = {}, &block) 
 
-            self.search_block = blk
-            binding.pry
-            Aces::High.indexer( self, &blk )
+            self.searchable_block = block
+
+            Aces::High.indexer( self, &block )
 
             after_save :perform_index_tasks
            
@@ -33,15 +33,14 @@ module Ace
     module InstanceMethods
 
       def text(*args)
-        
+
       end  
 
       private
 
       def perform_index_tasks
-        blk = self.class.instance_variable_get(:@search_block)
-        binding.pry
-        self.instance_eval(&blk)
+        block = self.searchable_block 
+        self.instance_eval(&block)
       end
 
       def remove_from_index
