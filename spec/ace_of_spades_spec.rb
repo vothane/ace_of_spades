@@ -7,7 +7,7 @@ describe 'ace_of_spades' do
 
     searchable do 
       text :name, :occupation
-    end  
+    end
   end
 
   context "when included" do
@@ -51,17 +51,25 @@ describe 'ace_of_spades' do
   context "when saving an instance of Joker" do
 
     let(:joker) do
-      stub_model(Joker) do |joker|
-        joker.name = "John Gray"
-        joker.occupation = "Neurotic Megalomaniac"
-      end
+      mock_model("Joker", :name       => "John Gray", 
+                          :occupation => "Neurotic Megalomaniac"
+                ).as_new_record.as_null_object
     end
 
     it "should do indexing to lucene via DRb" do
       joker.should_receive( :save ).and_return( true )
       joker.should respond_to( :after_save )
       joker.save
-      #joker.should_receive( :text )
+    end
+
+  end
+
+  context "when calling :after_save callback" do
+
+    it 'should run the proper callbacks' do
+      joker = Joker.new
+      joker.should_receive(:text)
+      joker.save
     end
 
   end

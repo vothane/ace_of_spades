@@ -30,7 +30,5 @@ ActiveRecord::Schema.define do
   create_table :jokers do |t|
     t.string  :name
     t.string  :occupation
-    t.integer :rank
-    t.integer :suit
   end
 end
