@@ -66,9 +66,9 @@ describe 'ace_of_spades' do
 
   context "when calling :after_save callback" do
 
-    it 'should run the proper callbacks' do
+    it 'should run the proper callbacks to handle indexing' do
       joker = Joker.new
-      joker.should_receive(:text)
+      joker.should_receive(:text).with(:name, :occupation)
       joker.save
     end
 
