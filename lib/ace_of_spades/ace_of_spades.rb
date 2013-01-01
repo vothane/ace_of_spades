@@ -30,9 +30,8 @@ module Ace
 
     module InstanceMethods
 
-      def text(*args)
-        puts "gggggggggggggggggggggg"
-        binding.pry
+      def text(*fields)
+        
       end  
 
       private

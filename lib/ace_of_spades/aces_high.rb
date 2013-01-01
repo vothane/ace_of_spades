@@ -1,9 +1,8 @@
 module Aces
   module High
-    class << self
+    class Indexer
       def indexer(klass, &block)
-        #data = klass.find(:all)
-      end  
-    end  
+      end
+    end
   end
 end      

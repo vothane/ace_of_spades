@@ -42,10 +42,6 @@ describe 'ace_of_spades' do
                               .should include( :remove_from_index )
     end
 
-    it "should include Aces::High module for indexing" do
-      Aces::High.should respond_to( :indexer )
-    end
-
   end
 
   context "when saving an instance of Joker" do
@@ -69,6 +65,7 @@ describe 'ace_of_spades' do
     it 'should run the proper callbacks to handle indexing' do
       joker = Joker.new
       joker.should_receive(:text).with(:name, :occupation)
+      Aces::High::Indexer.should_receive(:index_text_field)
       joker.save
     end
 
