@@ -56,7 +56,7 @@ describe 'ace_of_spades' do
                 ).as_new_record.as_null_object
     end
 
-    it "should do indexing to lucene via DRb" do
+    it "should call :after_save callback" do
       joker.should_receive( :save ).and_return( true )
       joker.should respond_to( :after_save )
       joker.save
@@ -72,6 +72,14 @@ describe 'ace_of_spades' do
       joker.save
     end
 
+  end
+
+  context 'after_destroy' do
+    it 'should run the proper callbacks' do
+      project = Joker.new
+      project.should_receive(:remove_from_index)
+      project.run_callbacks(:destroy) { true }
+    end
   end
 
 end

@@ -16,8 +16,6 @@ module Ace
 
             self.searchable_block = block
 
-            Aces::High.indexer( self, &block )
-
             after_save :perform_index_tasks
            
             after_destroy :remove_from_index
@@ -33,7 +31,8 @@ module Ace
     module InstanceMethods
 
       def text(*args)
-
+        puts "gggggggggggggggggggggg"
+        binding.pry
       end  
 
       private
