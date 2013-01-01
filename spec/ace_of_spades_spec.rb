@@ -10,7 +10,7 @@ describe 'ace_of_spades' do
     end
   end
 
-  context "when included" do
+  context "when included by calling ace_of_spades on class" do
 
     let(:joker) do
       mock_model("Joker", :name       => "John Gray", 
