@@ -65,7 +65,7 @@ describe 'ace_of_spades' do
     it 'should run the proper callbacks to handle indexing' do
       joker = Joker.new
       joker.should_receive(:text).with(:name, :occupation)
-      Aces::High::Indexer.should_receive(:index_text_field)
+      Aces::High.should_receive(:index_text_field)
       joker.save
     end
 

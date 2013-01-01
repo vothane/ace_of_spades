@@ -31,7 +31,9 @@ module Ace
     module InstanceMethods
 
       def text(*fields)
-        
+        fields.each do |field|
+          Aces::High.index_text_field( field, self.send(field) )
+        end  
       end  
 
       private
