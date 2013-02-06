@@ -7,9 +7,12 @@ module Ace
     module ClassMethods
 
       def ace_of_spades(config = {})
-        
-        cattr_accessor :searchable_block
 
+        cattr_accessor :server_address
+        cattr_accessor :searchable_block
+        
+        self.server_address = config[:server_address]
+        
         class << self
 
           def searchable(options = {}, &block) 

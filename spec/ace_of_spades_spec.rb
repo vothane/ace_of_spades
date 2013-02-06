@@ -66,7 +66,7 @@ describe 'ace_of_spades' do
       joker = Joker.new(:name => "John Gray", :occupation => "Tech Lead Dweeb")
       joker.should_receive(:text).with(:name, :occupation)
       Aces::High.should_receive(:index_text_field)
-      joker.save
+      joker.run_callbacks(:save) { true } 
     end
 
     it 'should access atributes defined in searchable block' do
