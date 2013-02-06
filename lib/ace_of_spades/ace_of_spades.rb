@@ -8,15 +8,16 @@ module Ace
 
       def ace_of_spades(config = {})
 
-        cattr_accessor :server_address
+        cattr_accessor :aces_high_server
         cattr_accessor :searchable_block
         
-        self.server_address = config[:server_address]
-        
+        self.aces_high_server = DRbObject.new_with_uri(config[:server_address])
+
         class << self
 
           def searchable(options = {}, &block) 
-
+            
+            aces_high_server
             self.searchable_block = block
 
             after_save :perform_index_tasks
@@ -35,7 +36,7 @@ module Ace
 
       def text(*fields)
         fields.each do |field|
-          Aces::High.index_text_field( field, self.send(field) )
+          self.aces_high_server.index( field, self.send(field) )
         end  
       end  
 

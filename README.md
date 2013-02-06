@@ -1,7 +1,7 @@
 ace_of_spades
 =============
 
-client library for aceshigh search engine
+client library for aceshigh search engine. Will have an interface and functionality very similar to sunspot.
 
 >If you like to gamble, I tell you I'm your man  
 >You win some, lose some, it's - all - the same to me  
