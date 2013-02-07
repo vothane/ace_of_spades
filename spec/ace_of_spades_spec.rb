@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 describe 'ace_of_spades' do
 
   class Joker < ActiveRecord::Base
-    ace_of_spades
+    ace_of_spades( {:server_address => 'druby://localhost:12345'} )
 
     searchable do 
       text :name, :occupation
@@ -24,6 +24,10 @@ describe 'ace_of_spades' do
     
     it "should included ace_of_spades text instance method" do
       joker.should respond_to( :text )
+    end
+    
+    it "should be an instance of DRbObject" do
+      Joker.aces_high_server.should be_a( DRb::DRbObject )
     end
 
   end

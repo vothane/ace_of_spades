@@ -12,7 +12,7 @@ module Ace
         cattr_accessor :searchable_block
         
         self.aces_high_server = DRbObject.new_with_uri(config[:server_address])
-
+        
         class << self
 
           def searchable(options = {}, &block) 
