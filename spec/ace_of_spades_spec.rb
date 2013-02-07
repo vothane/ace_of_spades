@@ -66,22 +66,22 @@ describe 'ace_of_spades' do
 
   context "when calling :after_save callback" do
 
-    it 'should run the proper callbacks to handle indexing' do
+    it 'should run the proper callbacks' do
       joker = Joker.new(:name => "John Gray", :occupation => "Tech Lead Dweeb")
-      joker.should_receive(:text).with(:name, :occupation)
-      Aces::High.should_receive(:index_text_field)
+      joker.should_receive(:perform_index_tasks)
       joker.run_callbacks(:save) { true } 
     end
 
     it 'should access atributes defined in searchable block' do
       joker = Joker.new(:name => "John Gray", :occupation => "Analysis Paralysis Rails Developer")
-      joker.should_receive(:send)
+      Joker.aces_high_server.should_receive(:index).with(:name, "John Gray")
+      Joker.aces_high_server.should_receive(:index).with(:occupation, "Analysis Paralysis Rails Developer")
       joker.run_callbacks(:save) { true }
     end
 
   end
 
-  context 'after_destroy' do
+  context "when calling :after_destroy callback" do
     it 'should run the proper callbacks' do
       joker = Joker.new(:name => "John Gray", :occupation => "Rails Choke Artist")
       joker.should_receive(:remove_from_index)

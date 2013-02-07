@@ -15,9 +15,8 @@ module Ace
         
         class << self
 
-          def searchable(options = {}, &block) 
-            
-            aces_high_server
+          def searchable(options = {}, &block)
+
             self.searchable_block = block
 
             after_save :perform_index_tasks
@@ -43,7 +42,7 @@ module Ace
       private
 
       def perform_index_tasks
-        block = self.searchable_block 
+        block = self.searchable_block         
         self.instance_eval(&block)
       end
 
