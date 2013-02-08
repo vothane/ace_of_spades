@@ -24,6 +24,10 @@ module Ace
             after_destroy :remove_from_index
       
           end
+
+          def search(query, field)
+            result = self.aces_high_server.search( query, field )
+          end    
           
         end
 
@@ -37,7 +41,7 @@ module Ace
         fields.each do |field|
           self.aces_high_server.index( field, self.send(field) )
         end  
-      end  
+      end
 
       private
 

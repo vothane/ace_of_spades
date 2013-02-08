@@ -101,8 +101,9 @@ describe 'ace_of_spades' do
       joker.save
       query = "occupation:'Shit Code Alchemist'"
       field = :name
+      Joker.aces_high_server.should_receive(:search).with(query, field).and_return("John Gray")
       result = Joker.search(query, field)
-      result.should be( "John Gray" )
+      result.should == "John Gray" 
     end
 
   end
