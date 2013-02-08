@@ -89,4 +89,22 @@ describe 'ace_of_spades' do
     end
   end
 
+  context "when searching" do
+
+    let(:joker) do
+      mock_model("Joker", :name       => "John Gray", 
+                          :occupation => "Shit Code Alchemist"
+                ).as_new_record.as_null_object
+    end
+
+    it "should do find" do
+      joker.save
+      query = "occupation:'Shit Code Alchemist'"
+      field = :name
+      result = Joker.search(query, field)
+      result.should be( "John Gray" )
+    end
+
+  end
+
 end
