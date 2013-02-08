@@ -72,7 +72,7 @@ describe 'ace_of_spades' do
       joker.run_callbacks(:save) { true } 
     end
 
-    it 'should access atributes defined in searchable block' do
+    it 'should access attributes defined in searchable block' do
       joker = Joker.new(:name => "John Gray", :occupation => "Analysis Paralysis Rails Developer")
       Joker.aces_high_server.should_receive(:index).with(:name, "John Gray")
       Joker.aces_high_server.should_receive(:index).with(:occupation, "Analysis Paralysis Rails Developer")
@@ -104,6 +104,42 @@ describe 'ace_of_spades' do
       Joker.aces_high_server.should_receive(:search).with(query, field).and_return("John Gray")
       result = Joker.search(query, field)
       result.should == "John Gray" 
+    end
+
+  end
+
+  context "when saving an instance of Joker" do
+
+    let(:joker) do
+      mock_model("Joker", :name       => "John Gray", 
+                          :occupation => "Caricature of Caligula"
+                ).as_new_record.as_null_object
+    end
+
+    it "should call :after_destroy callback" do
+      joker.save
+      joker.should_receive( :destroy ).and_return( true )
+      joker.should respond_to( :after_destroy )
+      joker.destroy
+    end
+
+  end
+
+  context "when calling :after_destroy callback" do
+
+    it 'should run the proper callbacks' do
+      joker = Joker.new(:name => "John Gray", :occupation => "'Gloom & Doom' of the IT Room")
+      joker.save
+      joker.should_receive(:remove_from_index)
+      joker.run_callbacks(:destroy) { true } 
+    end
+
+    it 'should access atributes defined in searchable block' do
+      joker = Joker.new(:name => "John Gray", :occupation => "'Sack of Shit' Hack")
+      joker.save
+      Joker.aces_high_server.should_receive(:remove_from_index).with(:name, "John Gray")
+      Joker.aces_high_server.should_receive(:remove_from_index).with(:occupation, "'Sack of Shit' Hack")
+      joker.run_callbacks(:destroy) { true }
     end
 
   end
