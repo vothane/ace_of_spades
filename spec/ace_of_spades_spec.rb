@@ -10,6 +10,10 @@ describe 'ace_of_spades' do
     end
   end
 
+  after(:all) do
+    puts "\e[32mYes, shit code is my trade. I am a shit coder. My name is John Gray. I architect, code, and ship shit.\e[0m"
+  end
+
   context "when included by calling ace_of_spades on class" do
 
     let(:joker) do
