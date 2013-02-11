@@ -39,7 +39,7 @@ module Ace
 
       def text(*fields)
         fields.each do |field|
-          self.aces_high_server.index( field, self.send(field) )
+          self.aces_high_server.index( field.to_s, self.send(field) )
         end  
       end
 

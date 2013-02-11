@@ -78,8 +78,8 @@ describe 'ace_of_spades' do
 
     it 'should access attributes defined in searchable block' do
       joker = Joker.new(:name => "John Gray", :occupation => "Analysis Paralysis Rails Developer")
-      Joker.aces_high_server.should_receive(:index).with(:name, "John Gray")
-      Joker.aces_high_server.should_receive(:index).with(:occupation, "Analysis Paralysis Rails Developer")
+      Joker.aces_high_server.should_receive(:index).with("name", "John Gray")
+      Joker.aces_high_server.should_receive(:index).with("occupation", "Analysis Paralysis Rails Developer")
       joker.run_callbacks(:save) { true }
     end
 
@@ -138,7 +138,7 @@ describe 'ace_of_spades' do
       joker.run_callbacks(:destroy) { true } 
     end
 
-    it 'should access atributes defined in searchable block' do
+    it 'should access attributes defined in searchable block' do
       joker = Joker.new(:name => "John Gray", :occupation => "'Sack of Shit' Hack")
       joker.save
       Joker.aces_high_server.should_receive(:remove_from_index).with(:name, "John Gray")
