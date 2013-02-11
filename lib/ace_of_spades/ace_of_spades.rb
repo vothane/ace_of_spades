@@ -51,7 +51,10 @@ module Ace
       end
 
       def remove_from_index
-        puts "ok"
+        self.attributes.each do |attribute|
+          #binding.pry
+          self.aces_high_server.remove_from_index( attribute, self.send(attribute) )
+        end
       end
 
     end

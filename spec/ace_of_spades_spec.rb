@@ -10,14 +10,10 @@ describe 'ace_of_spades' do
     end
   end
 
-  after(:all) do
-    puts "\e[32mYes, shit code is my trade. I am a shit coder. My name is John Gray. I architect, code, and ship shit.\e[0m"
-  end
-
   context "when included by calling ace_of_spades on class" do
 
     let(:joker) do
-      mock_model("Joker", :name       => "John Gray", 
+      mock_model("Joker", :name       => "Former Boss", 
                           :occupation => "Rubyist Preeminence Pretender"
                 ).as_new_record.as_null_object
     end
@@ -55,7 +51,7 @@ describe 'ace_of_spades' do
   context "when saving an instance of Joker" do
 
     let(:joker) do
-      mock_model("Joker", :name       => "John Gray", 
+      mock_model("Joker", :name       => "CEO of Fortune 500 Company", 
                           :occupation => "Neurotic Megalomaniac"
                 ).as_new_record.as_null_object
     end
@@ -71,14 +67,14 @@ describe 'ace_of_spades' do
   context "when calling :after_save callback" do
 
     it 'should run the proper callbacks' do
-      joker = Joker.new(:name => "John Gray", :occupation => "Tech Lead Dweeb")
+      joker = Joker.new(:name => "That Guy", :occupation => "Tech Lead Dweeb")
       joker.should_receive(:perform_index_tasks)
       joker.run_callbacks(:save) { true } 
     end
 
     it 'should access attributes defined in searchable block' do
-      joker = Joker.new(:name => "John Gray", :occupation => "Analysis Paralysis Rails Developer")
-      Joker.aces_high_server.should_receive(:index).with("name", "John Gray")
+      joker = Joker.new(:name => "Co-Worker", :occupation => "Analysis Paralysis Rails Developer")
+      Joker.aces_high_server.should_receive(:index).with("name", "Co-Worker")
       Joker.aces_high_server.should_receive(:index).with("occupation", "Analysis Paralysis Rails Developer")
       joker.run_callbacks(:save) { true }
     end
@@ -87,7 +83,7 @@ describe 'ace_of_spades' do
 
   context "when calling :after_destroy callback" do
     it 'should run the proper callbacks' do
-      joker = Joker.new(:name => "John Gray", :occupation => "Rails Choke Artist")
+      joker = Joker.new(:name => "Just Dont", :occupation => "Rails Choke Artist")
       joker.should_receive(:remove_from_index)
       joker.run_callbacks(:destroy) { true }
     end
@@ -96,7 +92,7 @@ describe 'ace_of_spades' do
   context "when searching" do
 
     let(:joker) do
-      mock_model("Joker", :name       => "John Gray", 
+      mock_model("Joker", :name       => "Me Sometimes", 
                           :occupation => "Shit Code Alchemist"
                 ).as_new_record.as_null_object
     end
@@ -105,9 +101,9 @@ describe 'ace_of_spades' do
       joker.save
       query = "occupation:'Shit Code Alchemist'"
       field = :name
-      Joker.aces_high_server.should_receive(:search).with(query, field).and_return("John Gray")
+      Joker.aces_high_server.should_receive(:search).with(query, field).and_return("Me Sometimes")
       result = Joker.search(query, field)
-      result.should == "John Gray" 
+      result.should == "Me Sometimes" 
     end
 
   end
@@ -115,7 +111,7 @@ describe 'ace_of_spades' do
   context "when saving an instance of Joker" do
 
     let(:joker) do
-      mock_model("Joker", :name       => "John Gray", 
+      mock_model("Joker", :name       => "Some Bosses", 
                           :occupation => "Caricature of Caligula"
                 ).as_new_record.as_null_object
     end
@@ -132,17 +128,17 @@ describe 'ace_of_spades' do
   context "when calling :after_destroy callback" do
 
     it 'should run the proper callbacks' do
-      joker = Joker.new(:name => "John Gray", :occupation => "'Gloom & Doom' of the IT Room")
+      joker = Joker.new(:name => "Business Person", :occupation => "'Gloom & Doom' of the IT Room")
       joker.save
       joker.should_receive(:remove_from_index)
       joker.run_callbacks(:destroy) { true } 
     end
 
     it 'should access attributes defined in searchable block' do
-      joker = Joker.new(:name => "John Gray", :occupation => "'Sack of Shit' Hack")
+      joker = Joker.new(:name => "Some One", :occupation => "Meh")
       joker.save
-      Joker.aces_high_server.should_receive(:remove_from_index).with(:name, "John Gray")
-      Joker.aces_high_server.should_receive(:remove_from_index).with(:occupation, "'Sack of Shit' Hack")
+      Joker.aces_high_server.should_receive(:remove_from_index).with("name", "Some One")
+      Joker.aces_high_server.should_receive(:remove_from_index).with("occupation", "Meh")
       joker.run_callbacks(:destroy) { true }
     end
 
