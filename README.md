@@ -1,7 +1,13 @@
-ace_of_spades
-=============
+## ace_of_spades
 
 client library for aceshigh search engine. Will have an interface and functionality very similar to sunspot.
+
+## Tests
+
+to run tests, you should have a aceshigh search server
+running. See aceshigh for instructions.
+
+## Preamble
 
 >If you like to gamble, I tell you I'm your man  
 >You win some, lose some, it's - all - the same to me  
