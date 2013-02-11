@@ -38,7 +38,9 @@ module Ace
     module InstanceMethods
 
       def text(*fields)
+        @index_fields = [] if @index_fields.nil?
         fields.each do |field|
+          @index_fields << field unless @index_fields.include? field
           self.aces_high_server.index( field.to_s, self.send(field) )
         end  
       end
@@ -51,9 +53,8 @@ module Ace
       end
 
       def remove_from_index
-        self.attributes.each do |attribute|
-          #binding.pry
-          self.aces_high_server.remove_from_index( attribute, self.send(attribute) )
+        @index_fields.each do |index_field|
+          self.aces_high_server.remove_from_index( index_field.to_s, self.send(index_field) )
         end
       end
 
