@@ -41,7 +41,7 @@ module Ace
         @index_fields = [] if @index_fields.nil?
         fields.each do |field|
           @index_fields << field unless @index_fields.include? field
-          self.aces_high_server.index << { field => self.send(field) }
+          self.aces_high_server.index { field => self.send(field) }
         end  
       end
 
