@@ -25,8 +25,8 @@ module Ace
       
           end
 
-          def search(query, field)
-            result = self.aces_high_server.search( query, field )
+          def search(query)
+            result = self.aces_high_server.search( query )
           end    
           
         end
@@ -39,10 +39,13 @@ module Ace
 
       def text(*fields)
         @index_fields = [] if @index_fields.nil?
+        index_data = {id: (self.send(:id)).to_s}
         fields.each do |field|
           @index_fields << field unless @index_fields.include? field
-          self.aces_high_server.index { field => self.send(field) }
-        end  
+          index_data[field.to_s] = (self.send(field)).to_s 
+        end         
+        self.aces_high_server.index(index_data)
+        self.aces_high_server.commit_to_index 
       end
 
       private

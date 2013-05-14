@@ -22,13 +22,18 @@ ActiveRecord::Base.establish_connection(
 
 begin
   ActiveRecord::Schema.drop_table('jokers')
+  ActiveRecord::Schema.drop_table('pokers')
 rescue
   nil
 end
 
 ActiveRecord::Schema.define do
   create_table :jokers do |t|
-    t.string  :name
-    t.string  :occupation
+    t.string   :name
+    t.string   :occupation
+  end
+  create_table :pokers do |t|
+    t.string   :suit
+    t.string   :rank
   end
 end
