@@ -25,6 +25,13 @@ module Ace
       
           end
 
+          def method_added(name)
+            if name == :text
+              fields = method(name).parameters.map(&:last)
+              fields.each { |field| self.aces_high_server.store_field( field ) }
+            end  
+          end  
+
           def search(query)
             result = self.aces_high_server.search( query )
           end    
