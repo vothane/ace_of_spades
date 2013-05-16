@@ -19,18 +19,13 @@ module Ace
 
             self.searchable_block = block
 
+            Ace::Spades::Indexable.set_field_stores( self.aces_high_server, &block )
+
             after_save :perform_index_tasks
            
             after_destroy :remove_from_index
       
           end
-
-          def method_added(name)
-            if name == :text
-              fields = method(name).parameters.map(&:last)
-              fields.each { |field| self.aces_high_server.store_field( field ) }
-            end  
-          end  
 
           def search(query)
             result = self.aces_high_server.search( query )

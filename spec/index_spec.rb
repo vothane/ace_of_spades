@@ -16,6 +16,7 @@ describe 'ace_of_spades' do
       poker = Poker.new(suit: "Hearts", rank: "King")
       poker.save
       result = Poker.search(suit: "Hearts")
+binding.pry      
       result.size.should == 1
       #doc = result[0]
       #doc[:suit].should == 'Hearts'
