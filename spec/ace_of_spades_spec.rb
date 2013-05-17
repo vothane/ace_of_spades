@@ -45,7 +45,15 @@ describe 'ace_of_spades' do
                               .collect( &:filter )
                               .should include( :remove_from_index )
     end
-
+    
+    it "should have called Ace::Spades::Indexable set_field_stores method" do
+      Poker = Class.new(ActiveRecord::Base)
+      Ace::Spades::Indexable.should_receive( :set_field_stores )
+      Poker.send( :ace_of_spades, {:server_address => 'druby://localhost:12345'} )
+      Poker.send( :searchable) do 
+        text :name, :occupation
+      end
+    end
   end
 
   context "when saving an instance of Joker" do
@@ -74,8 +82,8 @@ describe 'ace_of_spades' do
 
     it 'should access attributes defined in searchable block' do
       joker = Joker.new(:name => "Co-Worker", :occupation => "Analysis Paralysis Rails Developer")
-      Joker.aces_high_server.should_receive(:index).with("name", "Co-Worker")
-      Joker.aces_high_server.should_receive(:index).with("occupation", "Analysis Paralysis Rails Developer")
+      Joker.aces_high_server.should_receive(:index).with(:id => "", "name" => "Co-Worker", "occupation" => "Analysis Paralysis Rails Developer")
+      #Joker.aces_high_server.should_receive(:index).with("occupation", "Analysis Paralysis Rails Developer")
       joker.run_callbacks(:save) { true }
     end
 
@@ -101,8 +109,8 @@ describe 'ace_of_spades' do
       joker.save
       query = "occupation:'Shit Code Alchemist'"
       field = :name
-      Joker.aces_high_server.should_receive(:search).with(query, field).and_return("Me Sometimes")
-      result = Joker.search(query, field)
+      Joker.aces_high_server.should_receive(:search).with(query).and_return("Me Sometimes")
+      result = Joker.search(query)
       result.should == "Me Sometimes" 
     end
 
