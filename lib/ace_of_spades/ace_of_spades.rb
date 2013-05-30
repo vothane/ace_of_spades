@@ -28,7 +28,7 @@ module Ace
           end
 
           def search(query)
-            result = self.aces_high_server.search( query )
+            self.aces_high_server.search( query )
           end    
           
         end

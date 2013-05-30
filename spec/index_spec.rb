@@ -13,14 +13,21 @@ describe 'ace_of_spades' do
   context "when committing to index by saving and then searching on index" do
     
     it "should find by tag" do
-      poker = Poker.new(suit: "Hearts", rank: "King")
-      poker.save
-      result = Poker.search(suit: "Hearts")
-binding.pry      
+      card1 = Poker.new(suit: "Hearts",   rank: "King")
+      card2 = Poker.new(suit: "Spades",   rank: "Ace")
+      card3 = Poker.new(suit: "Clubs",    rank: "Jack")
+      card4 = Poker.new(suit: "Diamonds", rank: "Three")
+      card5 = Poker.new(suit: "Clubs",    rank: "Ace")
+
+      card1.save
+      card2.save
+      card3.save
+      card4.save
+      card5.save
+
+      result = Poker.search(suit: "Spades")
       result.size.should == 1
-      #doc = result[0]
-      #doc[:suit].should == 'Hearts'
-      #doc[:rank].should == 'King'
+      result.should include( {:id => "2", :suit => "Spades", :rank => "Ace"} )
     end
   end
 end  
