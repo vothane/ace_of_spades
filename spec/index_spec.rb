@@ -11,23 +11,44 @@ describe 'ace_of_spades' do
   end
 
   context "when committing to index by saving and then searching on index" do
-    
-    it "should find by tag" do
+
+    before :all do
       card1 = Poker.new( suit: "Hearts",   rank: "King",  value: 13 )
       card2 = Poker.new( suit: "Spades",   rank: "Ace",   value: 14 )
       card3 = Poker.new( suit: "Clubs",    rank: "Jack",  value: 11 )
       card4 = Poker.new( suit: "Diamonds", rank: "Three", value:  3 )
-      card5 = Poker.new( suit: "Clubs",    rank: "Ace",   value: 14 )
+      card5 = Poker.new( suit: "Clubs",    rank: "Queen", value: 12 )
 
       card1.save
       card2.save
       card3.save
       card4.save
       card5.save
-
+    end
+    
+    it "should find by field" do
+      result1 = Poker.search(suit: "Spades")
+      result2 = Poker.search(rank: "Ace")
+      result3 = Poker.search(value: 14)
+      result1.size.should == 1
+      result2.size.should == 1
+      result3.size.should == 1
+      result1.should include( {:id => "2", :suit => "Spades", :rank => "Ace", :value => 14} )
+      result2.should include( {:id => "2", :suit => "Spades", :rank => "Ace", :value => 14} )
+      result3.should include( {:id => "2", :suit => "Spades", :rank => "Ace", :value => 14} )
+    end
+    
+    it "should be empty when field value does not exist" do
+      result = Poker.search(suit: "Zpades")
+      result.size.should == 0
+    end
+    
+    it "should have fields with correct types" do
       result = Poker.search(suit: "Spades")
-      result.size.should == 1
-      result.should include( {:id => "2", :suit => "Spades", :rank => "Ace", :value => 14} )
+      fields = result.first
+      fields[:suit].should be_a_kind_of(String)
+      fields[:rank].should be_a_kind_of(String)
+      fields[:value].should be_a_kind_of(Fixnum)
     end
   end
 end  
