@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/vothane/ace_of_spades.png)](https://codeclimate.com/github/vothane/ace_of_spades)
+
 ## ace_of_spades
 
 client library for aceshigh search engine. Will have an interface and functionality very similar to sunspot.
