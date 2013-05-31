@@ -35,5 +35,6 @@ ActiveRecord::Schema.define do
   create_table :pokers do |t|
     t.string   :suit
     t.string   :rank
+    t.integer  :value
   end
 end

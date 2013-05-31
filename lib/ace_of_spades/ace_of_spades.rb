@@ -19,7 +19,7 @@ module Ace
 
             self.searchable_block = block
 
-            Ace::Spades::Indexable.set_field_stores( self.aces_high_server, &block )
+            Ace::Spades::Indexable.set_field_stores( self, self.aces_high_server, &block )
 
             after_save :perform_index_tasks
            
