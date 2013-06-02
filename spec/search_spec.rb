@@ -30,12 +30,15 @@ describe 'ace_of_spades' do
       result1 = Poker.search(suit: "Spades")
       result2 = Poker.search(rank: "Ace")
       result3 = Poker.search(value: 14)
+
       result1.size.should == 1
       result2.size.should == 1
       result3.size.should == 1
-      result1.should include( {:id => "2", :suit => "Spades", :rank => "Ace", :value => 14} )
-      result2.should include( {:id => "2", :suit => "Spades", :rank => "Ace", :value => 14} )
-      result3.should include( {:id => "2", :suit => "Spades", :rank => "Ace", :value => 14} )
+      
+      # delete id from result, value is nondeterministic unless using mocks
+      (result1.map { |hash| hash.tap { |h| h.delete(:id) } }).should include( {:suit => "Spades", :rank => "Ace", :value => 14} )
+      (result2.map { |hash| hash.tap { |h| h.delete(:id) } }).should include( {:suit => "Spades", :rank => "Ace", :value => 14} )
+      (result3.map { |hash| hash.tap { |h| h.delete(:id) } }).should include( {:suit => "Spades", :rank => "Ace", :value => 14} )
     end
     
     it "should be empty when field value does not exist" do
@@ -50,5 +53,17 @@ describe 'ace_of_spades' do
       fields[:rank].should be_a_kind_of(String)
       fields[:value].should be_a_kind_of(Fixnum)
     end
+
+    it "should find all instances that match query" do
+      result = Poker.search(suit: "Clubs")
+
+      # delete id from result, value is nondeterministic unless using mocks
+      (result.map { |hash| hash.tap { |h| h.delete(:id) } }).should include( {:suit => "Clubs", :rank => "Jack", :value => 11}, {:suit => "Clubs", :rank => "Queen", :value => 12} )
+    end 
+
+    it "should be empty if query field type mismatches" do
+      result = Poker.search(rank: "14")
+      result.size.should == 0
+    end   
   end
 end  
