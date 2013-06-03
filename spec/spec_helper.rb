@@ -28,13 +28,17 @@ rescue
 end
 
 ActiveRecord::Schema.define do
+
   create_table :jokers do |t|
     t.string   :name
     t.string   :occupation
   end
+
   create_table :pokers do |t|
     t.string   :suit
     t.string   :rank
     t.integer  :value
+    t.text     :description
   end
+
 end
