@@ -63,7 +63,7 @@ describe "searching" do
 
       (result1.map { |hash| hash.tap { |h| h.delete(:id) } }).should include({:suit => "Hearts", :rank => "King", :value => 13, :description => CARD_MAP[:hearts_king]})
       
-      (result2.map { |hash| hash.tap { |h| h.delete(:id) } }).should include({:suit => "Ace", :rank => "Spades", :value => 14, :description => CARD_MAP[:spades_ace]})
+      (result2.map { |hash| hash.tap { |h| h.delete(:id) } }).should include({:suit => "Spades", :rank => "Ace", :value => 14, :description => CARD_MAP[:spades_ace]})
     end
   end  
 end
