@@ -44,17 +44,19 @@ module Ace
     module InstanceMethods
 
       def searchable_fields(*fields)
-        @index_fields = [] if @index_fields.nil?
-        index_data = {id: (self.send(:id)).to_s}
-        fields.each do |field|
-          @index_fields << field unless @index_fields.include? field
-          index_data[field.to_s] = (self.send(field)).to_s 
-        end         
-        self.aces_high_server.index(index_data)
+        self.aces_high_server.index( index_fields( fields ) )
         self.aces_high_server.commit_to_index 
       end
 
       private
+
+      def index_fields( fields )
+        index_data = {id: (self.send(:id)).to_s}
+        fields.each do |field|
+          index_data[field.to_s] = (self.send(field)).to_s 
+        end  
+        index_data       
+      end
 
       def perform_index_tasks
         block = self.searchable_block         
@@ -62,9 +64,9 @@ module Ace
       end
 
       def remove_from_index
-        @index_fields.each do |index_field|
-          self.aces_high_server.remove_from_index( index_field.to_s, self.send(index_field) )
-        end
+        #@index_fields.each do |index_field|
+          #self.aces_high_server.remove_from_index( index_field.to_s, self.send(index_field) )
+        #end
       end
 
     end
