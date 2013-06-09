@@ -29,7 +29,11 @@ module Ace
 
           def search(query)
             self.aces_high_server.search( query )
-          end    
+          end 
+
+          def clear_index
+            self.aces_high_server.clear_index
+          end     
           
         end
 
@@ -39,7 +43,7 @@ module Ace
 
     module InstanceMethods
 
-      def text(*fields)
+      def searchable_fields(*fields)
         @index_fields = [] if @index_fields.nil?
         index_data = {id: (self.send(:id)).to_s}
         fields.each do |field|

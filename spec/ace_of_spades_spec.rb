@@ -6,24 +6,18 @@ describe 'ace_of_spades' do
     ace_of_spades( {:server_address => 'druby://localhost:12345'} )
 
     searchable do 
-      text :name, :occupation
+      searchable_fields :suit, :rank, :value, :description
     end
   end
 
   context "when included by calling ace_of_spades on class" do
 
-    let(:joker) do
-      mock_model("Joker", :name       => "Former Boss", 
-                          :occupation => "Rubyist Preeminence Pretender"
-                ).as_new_record.as_null_object
-    end
-    
     it "should included ace_of_spades searchable method" do
       Joker.should respond_to( :searchable )
     end
     
-    it "should included ace_of_spades text instance method" do
-      joker.should respond_to( :text )
+    it "should included ace_of_spades searchable_fields instance method" do
+      Joker.should respond_to( :searchable_fields )
     end
     
     it "should be an instance of DRbObject" do
@@ -47,27 +41,29 @@ describe 'ace_of_spades' do
     end
     
     it "should have called Ace::Spades::Indexable set_field_stores method" do
-      Poker = Class.new(ActiveRecord::Base)
+      Joker = Class.new(ActiveRecord::Base)
       Ace::Spades::Indexable.should_receive( :set_field_stores )
-      Poker.send( :ace_of_spades, {:server_address => 'druby://localhost:12345'} )
-      Poker.send( :searchable) do 
-        text :name, :occupation
+      Joker.send( :ace_of_spades, {:server_address => 'druby://localhost:12345'} )
+      Joker.send( :searchable ) do 
+        searchable_fields :suit, :rank, :value, :description
       end
     end
   end
 
   context "when saving an instance of Joker" do
 
-    let(:joker) do
-      mock_model("Joker", :name       => "CEO of Fortune 500 Company", 
-                          :occupation => "Neurotic Megalomaniac"
+    let(:Joker) do
+      mock_model("Joker", suit: "Hearts", 
+                          rank: "King",
+                          value: 13,
+                          description: CARD_MAP[:hearts_king]
                 ).as_new_record.as_null_object
     end
 
     it "should call :after_save callback" do
-      joker.should_receive( :save ).and_return( true )
-      joker.should respond_to( :after_save )
-      joker.save
+      Joker.should_receive( :save ).and_return( true )
+      Joker.should respond_to( :after_save )
+      Joker.save
     end
 
   end
@@ -75,60 +71,64 @@ describe 'ace_of_spades' do
   context "when calling :after_save callback" do
 
     it 'should run the proper callbacks' do
-      joker = Joker.new(:name => "That Guy", :occupation => "Tech Lead Dweeb")
-      joker.should_receive(:perform_index_tasks)
-      joker.run_callbacks(:save) { true } 
+      Joker = Joker.new(suit: "Spades", rank: "Queen", value: 12, description: CARD_MAP[:spades_queen])
+      Joker.should_receive(:perform_index_tasks)
+      Joker.run_callbacks(:save) { true } 
     end
 
     it 'should access attributes defined in searchable block' do
-      joker = Joker.new(:name => "Co-Worker", :occupation => "Analysis Paralysis Rails Developer")
-      Joker.aces_high_server.should_receive(:index).with(:id => "", "name" => "Co-Worker", "occupation" => "Analysis Paralysis Rails Developer")
-      #Joker.aces_high_server.should_receive(:index).with("occupation", "Analysis Paralysis Rails Developer")
-      joker.run_callbacks(:save) { true }
+      Joker = Joker.new(suit: "Diamonds", rank: "Jack", value: 11, description: CARD_MAP[:diamonds_jack])
+      Joker.aces_high_server.should_receive(:index).with(:id => "", "suit" => "Diamonds", "rank" => "Jack", 
+                                                         "value" => 11, description => CARD_MAP[:diamonds_jack])
+      Joker.run_callbacks(:save) { true }
     end
 
   end
 
   context "when calling :after_destroy callback" do
     it 'should run the proper callbacks' do
-      joker = Joker.new(:name => "Just Dont", :occupation => "Rails Choke Artist")
-      joker.should_receive(:remove_from_index)
-      joker.run_callbacks(:destroy) { true }
+      Joker = Joker.new(suit: "Clubs", rank: "Queen", value: 12, description: CARD_MAP[:clubs_queen])
+      Joker.should_receive(:remove_from_index)
+      Joker.run_callbacks(:destroy) { true }
     end
   end
 
   context "when searching" do
 
-    let(:joker) do
-      mock_model("Joker", :name       => "Me Sometimes", 
-                          :occupation => "Shit Code Alchemist"
+    let(:Joker) do
+      mock_model("Joker", suit: "Spades", 
+                          rank: "Ace",
+                          value: 14,
+                          description: CARD_MAP[:spades_ace]
                 ).as_new_record.as_null_object
     end
 
     it "should do find" do
-      joker.save
-      query = "occupation:'Shit Code Alchemist'"
-      field = :name
-      Joker.aces_high_server.should_receive(:search).with(query).and_return("Me Sometimes")
+      Joker.save
+      query = "rank:'Ace'"
+      field = :suit
+      Joker.aces_high_server.should_receive(:search).with(query).and_return("Spades")
       result = Joker.search(query)
-      result.should == "Me Sometimes" 
+      result.should == "Spades" 
     end
 
   end
 
   context "when saving an instance of Joker" do
 
-    let(:joker) do
-      mock_model("Joker", :name       => "Some Bosses", 
-                          :occupation => "Caricature of Caligula"
+    let(:Joker) do
+      mock_model("Joker", suit: "Haarts", 
+                          rank: "King",
+                          value: 13,
+                          description: CARD_MAP[:hearts_king]
                 ).as_new_record.as_null_object
     end
 
     it "should call :after_destroy callback" do
-      joker.save
-      joker.should_receive( :destroy ).and_return( true )
-      joker.should respond_to( :after_destroy )
-      joker.destroy
+      Joker.save
+      Joker.should_receive( :destroy ).and_return( true )
+      Joker.should respond_to( :after_destroy )
+      Joker.destroy
     end
 
   end
@@ -136,18 +136,18 @@ describe 'ace_of_spades' do
   context "when calling :after_destroy callback" do
 
     it 'should run the proper callbacks' do
-      joker = Joker.new(:name => "Business Person", :occupation => "'Gloom & Doom' of the IT Room")
-      joker.save
-      joker.should_receive(:remove_from_index)
-      joker.run_callbacks(:destroy) { true } 
+      Joker = Joker.new(suit: "Diamonds", rank: "Jack", value: 11, description: CARD_MAP[:diamonds_jack])
+      Joker.save
+      Joker.should_receive(:remove_from_index)
+      Joker.run_callbacks(:destroy) { true } 
     end
 
     it 'should access attributes defined in searchable block' do
-      joker = Joker.new(:name => "Some One", :occupation => "Meh")
-      joker.save
-      Joker.aces_high_server.should_receive(:remove_from_index).with("name", "Some One")
-      Joker.aces_high_server.should_receive(:remove_from_index).with("occupation", "Meh")
-      joker.run_callbacks(:destroy) { true }
+      Joker = Joker.new(suit: "Spades", rank: "Queen", value: 12, description: CARD_MAP[:spades_queen])
+      Joker.save
+      Joker.aces_high_server.should_receive(:remove_from_index).with("suit", "Spades")
+      Joker.aces_high_server.should_receive(:remove_from_index).with("rank", "Queen")
+      Joker.run_callbacks(:destroy) { true }
     end
 
   end

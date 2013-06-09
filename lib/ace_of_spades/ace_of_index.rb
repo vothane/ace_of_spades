@@ -14,7 +14,7 @@ module Ace
         @record  = record
       end
 
-      def text(*fields)
+      def searchable_fields(*fields)
         fields.each do |field| 
           set_field_to_index(field)
         end  
