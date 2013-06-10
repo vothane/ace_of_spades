@@ -48,7 +48,7 @@ end
 CARD_MAP = {
   hearts_king: "The King of Hearts is the only King with no mustache, and is also typically shown with a sword behind his head, making him appear to be stabbing himself.",
   spades_ace: "The Ace of Spades, unique in its large, ornate spade, is sometimes said to be the death card, and in some games is used as a trump card.",
-  diamonds_jack: "The Jack of Diamonds is sometimes known as 'laughing boy'.",
+  diamonds_jack: "The Jack of Diamonds is sometimes known as laughing boy.",
   spades_queen: "The Queen of Spades usually holds a scepter and is sometimes known as 'the bedpost Queen', though more often she is called 'Black Lady'.",
   clubs_queen: "In many decks, the Queen of Clubs holds a flower. She is thus known as the 'flower Queen'."
 }
