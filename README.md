@@ -3,7 +3,8 @@
 ## ace_of_spades
 
 client library for aceshigh search engine. Will have an interface and functionality very similar to sunspot.
-
+Works on any implementation of ruby.
+ 
 ## Tests
 
 to run tests, you should have a aceshigh search server
