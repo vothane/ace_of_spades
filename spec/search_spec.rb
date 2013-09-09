@@ -4,14 +4,6 @@ describe "searching" do
 
   context "when committing to index by saving and then searching on index" do
 
-    class Poker < ActiveRecord::Base
-      ace_of_spades({:server_address => 'druby://localhost:12345'})
-
-      searchable do
-        searchable_fields :suit, :rank, :value, :description
-      end
-    end
-
     before :all do
       card1 = Poker.create(suit: "Hearts",   rank: "King",  value: 13, description: CARD_MAP[:hearts_king])
       card2 = Poker.create(suit: "Spades",   rank: "Ace",   value: 14, description: CARD_MAP[:spades_ace])

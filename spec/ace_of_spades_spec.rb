@@ -2,14 +2,6 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe 'ace_of_spades' do
 
-  class Joker < ActiveRecord::Base
-    ace_of_spades( {:server_address => 'druby://localhost:12345'} )
-
-    searchable do 
-      searchable_fields :suit, :rank, :value, :description
-    end
-  end
-
   context "when included by calling ace_of_spades on class" do
 
     it "should included ace_of_spades searchable method" do

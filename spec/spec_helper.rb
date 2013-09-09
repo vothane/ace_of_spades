@@ -52,3 +52,19 @@ CARD_MAP = {
   spades_queen: "The Queen of Spades usually holds a scepter and is sometimes known as 'the bedpost Queen', though more often she is called 'Black Lady'.",
   clubs_queen: "In many decks, the Queen of Clubs holds a flower. She is thus known as the 'flower Queen'."
 }
+
+class Joker < ActiveRecord::Base
+  ace_of_spades( {:server_address => 'druby://localhost:12345'} )
+
+  searchable do 
+    searchable_fields :suit, :rank, :value, :description
+  end
+end
+
+class Poker < ActiveRecord::Base
+  ace_of_spades({:server_address => 'druby://localhost:12345'})
+
+  searchable do
+    searchable_fields :suit, :rank, :value, :description
+  end
+end
