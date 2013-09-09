@@ -10,6 +10,19 @@ Works on any implementation of ruby.
 to run tests, you should have a aceshigh search server
 running. See aceshigh for instructions.
 
+## Usage
+
+TODO: Write usage instructions here
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
+
 ## Preamble
 
 >If you like to gamble, I tell you I'm your man  
