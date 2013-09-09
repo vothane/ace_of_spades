@@ -12,10 +12,9 @@ to run tests, you should have a aceshigh search server
 
 ```
 git clone https://github.com/vothane/aceshigh.git
-
 ```
 
-go into aceshigh dir and in a terminal with jruby active, run:
+go into aceshigh dir and in a terminal with JRuby active, run:
 
 
 ```
@@ -29,6 +28,12 @@ druby://localhost:12345
 ```
 
 search server is now running at port 12345
+
+in another terminal with either Ruby MRI or JRuby active go to ace_of_spades dir
+
+```
+rspec spec 
+```
 
 ## Usage
 
