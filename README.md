@@ -8,7 +8,27 @@ Works on any implementation of ruby.
 ## Tests
 
 to run tests, you should have a aceshigh search server
-running. See aceshigh for instructions.
+
+
+```
+git clone https://github.com/vothane/aceshigh.git
+
+```
+
+go into aceshigh dir and in a terminal with jruby active, run:
+
+
+```
+jruby aceshigh_server.rb druby://localhost:12345 
+```
+
+should get output of
+
+```
+druby://localhost:12345
+```
+
+search server is now running at port 12345
 
 ## Usage
 
