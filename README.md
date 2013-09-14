@@ -37,7 +37,34 @@ rspec spec
 
 ## Usage
 
-TODO: Write usage instructions here
+### Setting Up ActiveRecord attributes to be searchable
+
+Add a `searchable` block to the objects you wish to index.
+
+```ruby
+class Poker < ActiveRecord::Base
+  ace_of_spades({:server_address => 'druby://localhost:12345'})
+
+  searchable do
+    searchable_fields :suit, :rank, :value, :description
+  end
+end
+```
+
+Poker model attributes `:suit, :rank, :value, :description` will now be indexed and stored in aceshigh with their respective type.
+
+### Searching Objects
+
+```ruby
+card1 = Poker.create(suit: "Hearts",   rank: "King",  value: 13, description: CARD_MAP[:hearts_king])
+card2 = Poker.create(suit: "Spades",   rank: "Ace",   value: 14, description: CARD_MAP[:spades_ace])
+card3 = Poker.create(suit: "Diamonds", rank: "Jack",  value: 11, description: CARD_MAP[:diamonds_jack])
+card4 = Poker.create(suit: "Spades",   rank: "Queen", value: 12, description: CARD_MAP[:spades_queen])
+card5 = Poker.create(suit: "Clubs",    rank: "Queen", value: 12, description: CARD_MAP[:clubs_queen])
+
+result1 = Poker.search(rank: "Ace") # => {:suit => "Spades", :rank => "Ace", :value => 14, :description => CARD_MAP[:spades_ace]}
+result2 = Poker.search(value: 14)   # => {:suit => "Spades", :rank => "Ace", :value => 14, :description => CARD_MAP[:spades_ace]}
+```
 
 ## Contributing
 
