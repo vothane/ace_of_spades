@@ -33,7 +33,11 @@ module Ace
 
           def clear_index
             self.aces_high_server.clear_index
-          end     
+          end 
+
+          def removed_from_index?(id)
+            self.aces_high_server.removed_from_index?( id )
+          end    
           
         end
 
@@ -63,12 +67,9 @@ module Ace
         self.instance_eval(&block)
       end
 
-      def remove_from_index(field, value)
-        #@index_fields.each do |index_field|
-          #self.aces_high_server.remove_from_index( index_field.to_s, self.send(index_field) )
-        #end
+      def remove_from_index
+        self.aces_high_server.remove_from_index( self.send(:id).to_s )
       end
-
     end
   end
 end

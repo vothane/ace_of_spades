@@ -64,5 +64,14 @@ describe "searching" do
 
       (result.map { |hash| hash.tap { |h| h.delete(:id) } }).should include({:suit => "Diamonds", :rank => "Jack", :value => 11, :description => CARD_MAP[:diamonds_jack]})
     end
+
+    it "should not be able to search a deleted record" do
+      result1 = Poker.search(rank: "Jack")
+      result1.size.should == 1
+
+      Poker.where(rank: "Jack").destroy_all
+      result2 = Poker.search(rank: "Jack")
+      result2.size.should == 0
+    end
   end  
 end

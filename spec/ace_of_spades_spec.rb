@@ -9,7 +9,8 @@ describe 'ace_of_spades' do
     end
     
     it "should included ace_of_spades searchable_fields instance method" do
-      Joker.should respond_to( :searchable_fields )
+      joker = Joker.new(suit: "Spades", rank: "Queen", value: 12, description: CARD_MAP[:spades_queen])
+      joker.should respond_to( :searchable_fields )
     end
     
     it "should be an instance of DRbObject" do
@@ -137,8 +138,7 @@ describe 'ace_of_spades' do
     it 'should access attributes defined in searchable block' do
       joker = Joker.new(suit: "Spades", rank: "Queen", value: 12, description: CARD_MAP[:spades_queen])
       joker.save
-      Joker.aces_high_server.should_receive(:remove_from_index).with("suit", "Spades")
-      Joker.aces_high_server.should_receive(:remove_from_index).with("rank", "Queen")
+      Joker.aces_high_server.should_receive(:remove_from_index).with("2")
       joker.run_callbacks(:destroy) { true }
     end
 
