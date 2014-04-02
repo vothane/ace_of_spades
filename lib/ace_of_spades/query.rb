@@ -33,9 +33,7 @@ module Query
     [:==, :=~].each do |operator|
       define_method(operator) do |operand|
         @operator = operator
-        if ( operand.instance_of? String )
-          operand = "'#{operand}'"
-        end
+        operand = "'#{operand}'" if ( operand.instance_of? String ) 
         @operand = operand
       end
 
