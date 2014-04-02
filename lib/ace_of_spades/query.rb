@@ -7,20 +7,12 @@ module Query
 
     def to_search_conditions
       query_strings = []
-      arguments = []
 
       @fields.each do |field|
-        # Get the conditions of each field
-        query_string, *field_arguments = field.to_query_condition
-
-        # Append them to the rest
-        query_strings << query_string
-        arguments << field_arguments
+        query_strings << field.to_query_condition
       end
 
-      # Build them up into the right format
-      full_query_string = query_strings.join(" AND ")
-      full_query_string
+      query_strings.join(" AND ")
     end
 
     def method_missing(name, *args)
