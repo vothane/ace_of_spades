@@ -33,14 +33,6 @@ describe 'ace_of_spades' do
                               .should include( :remove_from_index )
     end
     
-    it "should have called Ace::Spades::Indexable set_field_stores method" do
-      Joker = Class.new(ActiveRecord::Base)
-      Ace::Spades::Indexable.should_receive( :set_field_stores )
-      Joker.send( :ace_of_spades, {:server_address => 'druby://localhost:12345'} )
-      Joker.send( :searchable ) do 
-        searchable_fields :suit, :rank, :value, :description
-      end
-    end
   end
 
   context "when saving an instance of Joker" do
