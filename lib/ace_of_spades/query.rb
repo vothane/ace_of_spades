@@ -38,7 +38,7 @@ module Query
     end
 
     OPERATOR_MAP = {
-      :== => "=",
+      :== => ":",
       :=~ => "~"
     }
 
