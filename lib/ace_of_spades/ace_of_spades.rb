@@ -19,8 +19,6 @@ module Ace
 
             self.searchable_block = block
 
-            Ace::Spades::Indexable.set_field_stores( self, self.aces_high_server, &block )
-
             after_save :perform_index_tasks
            
             after_destroy :remove_from_index
@@ -48,8 +46,7 @@ module Ace
     module InstanceMethods
 
       def searchable_fields(*fields)
-        self.aces_high_server.index( hashify_fields( fields ) )
-        self.aces_high_server.commit_to_index 
+        hashify_fields( fields )
       end
 
       private
@@ -64,7 +61,8 @@ module Ace
 
       def perform_index_tasks
         block = self.searchable_block         
-        self.instance_eval(&block)
+        data = self.instance_eval(&block)
+        self.aces_high_server.index( data )
       end
 
       def remove_from_index
