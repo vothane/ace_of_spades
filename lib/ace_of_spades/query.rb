@@ -7,11 +7,7 @@ module Query
 
     def to_search_conditions
       query_strings = []
-
-      @fields.each do |field|
-        query_strings << field.to_query_condition
-      end
-
+      @fields.each { |field| query_strings << field.to_query_condition }
       query_strings.join(" AND ")
     end
 
