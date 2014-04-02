@@ -29,14 +29,6 @@ describe "searching" do
       result.size.should == 0
     end
 
-    it "should have fields with correct types" do
-      result = Poker.search(suit: "Spades")
-      fields = result.first
-      fields[:suit].should be_a_kind_of(String)
-      fields[:rank].should be_a_kind_of(String)
-      fields[:value].should be_a_kind_of(Fixnum)
-    end
-
     it "should find all instances that match query" do
       result = Poker.search(suit: "Spades")
 
