@@ -68,9 +68,7 @@ rspec spec
 
 ### Setting Up ActiveRecord attributes to be searchable
 
-Add a `searchable` block listing attrs you wish to index. List the AR attributes you wish to make 
-searchable and indexed follwing **searchable_fields** method, ex. `searchable_fields :a, :b, :c, :d`.
-Poker AR instances attrs `:a, :b, :c, :d` will now be indexed and searchable when created.
+Add a `searchable` block listing attrs you wish to index inside a ActiveRecord Class. Then list the AR attributes you wish to make searchable and indexed following the **searchable_fields** method inside the `searchable` block, ex. `searchable_fields :a, :b, :c, :d`. Poker AR instances attrs `:a, :b, :c, :d` will now be indexed and searchable when created.
 
 ### marking ActiveRecord attributes as indexable and searchable
 
