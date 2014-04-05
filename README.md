@@ -1,10 +1,5 @@
 [![Code Climate](https://codeclimate.com/github/vothane/ace_of_spades.png)](https://codeclimate.com/github/vothane/ace_of_spades)
 
-## ace_of_spades
-
-client library for aceshigh search engine. Will have an interface and functionality very similar to sunspot.
-Works on any implementation of ruby.
-
 ## Aces High, The Ace of Spades
 
 >If you like to gamble, I tell you I'm your man  
@@ -31,6 +26,11 @@ Works on any implementation of ruby.
 >The only thing you see, you know it's gonna be,  
 >Aces High  
 >The Ace of Spades  
+
+## ace_of_spades
+
+client library for aceshigh search engine. Will have an interface and functionality very similar to sunspot.
+Works on any implementation of ruby.
  
 ## Tests
 
@@ -41,7 +41,7 @@ to run tests, you should have a aceshigh search server
 git clone https://github.com/vothane/aceshigh.git
 ```
 
-go into aceshigh dir and in a terminal with JRuby active, run:
+go into `aceshigh` dir and in a terminal with *jruby* the active ruby, run:
 
 
 ```
@@ -54,13 +54,15 @@ should get output of
 druby://localhost:12345
 ```
 
-search server is now running at port 12345
+search server is now running at `port 12345`
 
-in another terminal with either Ruby MRI or JRuby active go to ace_of_spades dir
+in another terminal with either Ruby MRI or JRuby active go to `ace_of_spades` dir
 
 ```
 rspec spec 
 ```
+
+*Caveat* after running tests, you must restart search server to clear the index to rerun tests
 
 ## Usage
 
