@@ -25,8 +25,10 @@ module Ace
       
           end
 
-          def search(query)
-            self.aces_high_server.search( query )
+          def search(query = nil, &block)
+            hits = self.aces_high_server.search( query ) unless query.nil?
+            hits = self.aces_high_server.search( Query::Conditions.new( &block ).to_search_conditions ) if block_given?
+            hits 
           end 
 
           def clear_index

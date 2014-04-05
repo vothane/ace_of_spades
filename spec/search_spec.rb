@@ -21,11 +21,11 @@ describe "searching" do
     end
 
     it "should find by field and using query DSL" do
-      hits = Poker.search do  |search|
-               search.suit == "Spades"
-               search.values == 14
-            end     
-      
+      hits = Poker.search do |s|
+               s.suit == "Spades"
+               s.suit == "Hearts"
+            end 
+             
       hits.size.should == 1
 
       (hits.map { |hash| hash.tap { |h| h.delete(:id) } }).should include({"description" => CARD_MAP[:spades_ace]})
