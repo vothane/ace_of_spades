@@ -41,7 +41,7 @@ to run tests, you should have a aceshigh search server
 git clone https://github.com/vothane/aceshigh.git
 ```
 
-go into `aceshigh` dir and in a terminal with *jruby* the active ruby, run:
+go into `aceshigh` dir and in a terminal with **jruby** the active ruby, run:
 
 
 ```
@@ -56,19 +56,23 @@ druby://localhost:12345
 
 search server is now running at `port 12345`
 
-in another terminal with either Ruby MRI or JRuby active go to `ace_of_spades` dir
+in **another** **terminal** with either **ruby** MRI or **jruby** active go to the `ace_of_spades` dir
 
 ```
 rspec spec 
 ```
 
-*Caveat* after running tests, you must restart search server to clear the index to rerun tests
+**Caveat** after running tests, you must restart search server to clear the index to rerun tests
 
 ## Usage
 
 ### Setting Up ActiveRecord attributes to be searchable
 
-Add a `searchable` block to the objects you wish to index.
+Add a `searchable` block to the objects you wish to index. List the ActiveRecord attributes 
+you wish to make searchable and indexed, ex. `searchable_fields :suit, :rank, :value, :description`.
+Poker model attributes `:suit, :rank, :value, :description` will now be marked searchable.
+
+### marking ActiveRecord attributes as indexable and searchable
 
 ```ruby
 class Poker < ActiveRecord::Base
@@ -80,19 +84,31 @@ class Poker < ActiveRecord::Base
 end
 ```
 
-Poker model attributes `:suit, :rank, :value, :description` will now be indexed and stored in aceshigh with their respective type.
+Poker model attributes `:suit, :rank, :value, :description` will now be marked searchable.
 
-### Searching Objects
+### indexing AciveRecord instance attributes to Lucene
 
 ```ruby
-card1 = Poker.create(suit: "Hearts",   rank: "King",  value: 13, description: CARD_MAP[:hearts_king])
-card2 = Poker.create(suit: "Spades",   rank: "Ace",   value: 14, description: CARD_MAP[:spades_ace])
-card3 = Poker.create(suit: "Diamonds", rank: "Jack",  value: 11, description: CARD_MAP[:diamonds_jack])
-card4 = Poker.create(suit: "Spades",   rank: "Queen", value: 12, description: CARD_MAP[:spades_queen])
-card5 = Poker.create(suit: "Clubs",    rank: "Queen", value: 12, description: CARD_MAP[:clubs_queen])
+CARD_MAP = {
+  hearts_king: "The King of Hearts is the only King with no mustache, and is also typically shown with a sword behind his head, making him appear to be stabbing himself.",
+  spades_ace: "The Ace of Spades, unique in its large, ornate spade, is sometimes said to be the death card, and in some games is used as a trump card.",
+  diamonds_jack: "The Jack of Diamonds is sometimes known as laughing boy.",
+  spades_queen: "The Queen of Spades usually holds a scepter and is sometimes known as 'the bedpost Queen', though more often she is called 'Black Lady'.",
+  clubs_queen: "In many decks, the Queen of Clubs holds a flower. She is thus known as the 'flower Queen'."
+}
 
-result1 = Poker.search(rank: "Ace") # => {:suit => "Spades", :rank => "Ace", :value => 14, :description => CARD_MAP[:spades_ace]}
-result2 = Poker.search(value: 14)   # => {:suit => "Spades", :rank => "Ace", :value => 14, :description => CARD_MAP[:spades_ace]}
+Poker.create(suit: "Hearts",   rank: "King",  value: 13, description: CARD_MAP[:hearts_king])
+Poker.create(suit: "Spades",   rank: "Ace",   value: 14, description: CARD_MAP[:spades_ace])
+Poker.create(suit: "Diamonds", rank: "Jack",  value: 11, description: CARD_MAP[:diamonds_jack])
+Poker.create(suit: "Spades",   rank: "Queen", value: 12, description: CARD_MAP[:spades_queen])
+Poker.create(suit: "Clubs",    rank: "Queen", value: 12, description: CARD_MAP[:clubs_queen])
+```
+
+### searching
+
+```ruby
+Poker.search("Ace") # => {:suit => "Spades", :rank => "Ace", :value => 14, :description => CARD_MAP[:spades_ace]}
+Poker.search("value:14") # => {:suit => "Spades", :rank => "Ace", :value => 14, :description => CARD_MAP[:spades_ace]}
 ```
 
 ## Contributing
