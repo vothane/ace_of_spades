@@ -21,7 +21,7 @@ module Ace
 
             after_save :perform_index_tasks
            
-            after_destroy :remove_from_index
+            before_destroy :remove_from_index
       
           end
 
@@ -63,12 +63,12 @@ module Ace
 
       def perform_index_tasks
         block = self.searchable_block         
-        data = self.instance_eval(&block)
-        self.aces_high_server.index( data )
+        @data = self.instance_eval(&block)
+        self.aces_high_server.index( @data )
       end
 
       def remove_from_index
-        self.aces_high_server.remove_from_index( self.send(:id).to_s )
+        self.aces_high_server.remove_from_index( @data )
       end
     end
   end
